@@ -1,4 +1,4 @@
-package gox
+package generic
 
 import (
 	"fmt"
@@ -47,8 +47,7 @@ func isElemInMap(elem interface{}, obj interface{}, mapVal reflect.Value) (bool,
 	return elemVal.IsValid(), nil
 }
 
-func ForEach(constainer interface{}, f func (interface{}) error) error {
-
+func ForEach(constainer interface{}, f func(interface{}) error) error {
 	return nil
 }
 
@@ -56,6 +55,10 @@ func MergeMap(dst interface{}, src interface{}) error {
 	return nil
 }
 
-func Replace(	) error {
+func Replace() error {
 	return nil
+}
+
+func IsCollectionType(v interface{}) {
+
 }

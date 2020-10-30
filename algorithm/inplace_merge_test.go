@@ -1,8 +1,11 @@
 package algorithm
 
-import "fmt"
+import (
+	"fmt"
+	"testing"
+)
 
-func lower_bound(A []int, left int, right int, x int) int {
+func LowerBound(A []int, left int, right int, x int) int {
 	a, b := left, right
 	for a < b {
 		m := (a + b) / 2
@@ -15,7 +18,7 @@ func lower_bound(A []int, left int, right int, x int) int {
 	return b
 }
 
-func upper_bound(A []int, left int, right int, x int) int {
+func UpperBound(A []int, left int, right int, x int) int {
 	a, b := left, right
 	for a < b {
 		m := (a + b) / 2
@@ -53,32 +56,31 @@ func InplaceMerge(A []int, first int, mid int, last int) {
 		return
 	}
 
-	first_cut, second_cut := 0, 0
-	if true || len1 > len2 {
-		first_cut = first + (mid-first)/2
-		second_cut = lower_bound(A, mid, last, A[first_cut])
-	} else {
-		second_cut = mid + (last-mid)/2
-		first_cut = upper_bound(A, first, mid, A[second_cut])
+	cut1, cut2 := 0, 0
+	// if len1 > len2 {
+	cut1 = first + (mid-first)/2
+	cut2 = LowerBound(A, mid, last, A[cut1])
+	// } else {
+	// 	cut2 = mid + (last-mid)/2
+	// 	cut1 = UpperBound(A, first, mid, A[cut2])
+	// }
+
+	Rotate(A, cut1, mid, cut2)
+
+	newMid := mid
+	if cut2-mid > 0 {
+		newMid = cut1 + (cut2 - mid)
 	}
 
-	Rotate(A, first_cut, mid, second_cut)
-
-	new_mid := mid
-	if second_cut-mid > 0 {
-		new_mid = first_cut + (second_cut - mid)
-	}
-
-	InplaceMerge(A, first, first_cut, new_mid)
-	InplaceMerge(A, new_mid, second_cut, last)
+	InplaceMerge(A, first, cut1, newMid)
+	InplaceMerge(A, newMid, cut2, last)
 }
 
-func TestInplaceMerge() {
-	A := []int{1, 2, 2, 2, 2}
-	InplaceMerge(A, 0, 1, len(A))
+func TestInplaceMerge(t *testing.T) {
+	A := []int{3, 5, 5, 7, 1, 2, 2, 2, 4, 6}
+	InplaceMerge(A, 0, 4, len(A))
 	fmt.Println(A)
 
 	A = []int{1, 2, 3, 3, 3, 4, 5, 6, 7}
-	fmt.Println(lower_bound(A, 3, len(A), 3))
-	fmt.Println(upper_bound(A, 3, len(A), 3))
+	fmt.Println(LowerBound(A, 0, len(A), 3), UpperBound(A, 0, len(A), 3))
 }
