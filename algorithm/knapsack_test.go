@@ -35,7 +35,7 @@ func knapsack01(W []int, V []int, cap int) int {
 }
 
 func TestKnapsack01(t *testing.T) {
-	W := []int{-1, 1, 2, 3, 4}
-	V := []int{-1, 2, 3, 6, 8}
-	fmt.Println(knapsack01(W, V, 5))
+	W := []int{-1, 23, 26, 20, 18, 32, 27, 29, 26, 30, 27}
+	V := []int{-1, 505, 353, 458, 220, 354, 414, 498, 545, 473, 543}
+	fmt.Println(knapsack01(W, V, 67))
 }
