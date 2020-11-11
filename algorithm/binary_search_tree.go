@@ -1,8 +1,6 @@
 package algorithm
 
-import (
-	"fmt"
-)
+import "fmt"
 
 type Tree struct {
 	left   *Tree
@@ -13,7 +11,6 @@ type Tree struct {
 
 func create_tree(A []int) *Tree {
 	tree := Tree{nil, nil, nil, 0}
-
 	for i, v := range A {
 		if i == 0 {
 			tree.value = v

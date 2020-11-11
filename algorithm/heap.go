@@ -39,56 +39,58 @@ func isHeap(A []int, top int) bool {
 	right := 2*top + 2
 	rightisheap := right >= len(A) || isHeap(A, right)
 	return leftisheap && rightisheap
-
-	li := 2*top + 1
-	ri := 2*top + 2
-	if li < len(A) {
-		if !isHeap(A, li) {
-			return false
-		}
-		if A[top] < A[li] {
-			return false
-		}
-	}
-	if ri < len(A) {
-		if !isHeap(A, ri) {
-			return false
-		}
-		if A[top] < A[ri] {
-			return false
-		}
-	}
-
-	return true
 }
 
-func partition(A []int, left int, right int) int {
-	x := A[right]
-	p := left - 1
-	for j := p + 1; j < right; j++ {
-		if A[j] <= x {
-			p++
-			A[p], A[j] = A[j], A[p]
-		}
-	}
-	A[p+1], A[right] = A[right], A[p+1]
-	return p + 1
-}
-
-func quicksort(A []int, left int, right int) {
-	if left >= right {
+// Heapify makes A a heap.
+func Heapify(A []int) {
+	if len(A) < 2 {
 		return
 	}
-	mid := partition(A, left, right)
-	quicksort(A, left, mid-1)
-	quicksort(A, mid+1, right)
+	for i := len(A)/2 - 1; i >= 0; i-- {
+		shiftdown(A, i)
+	}
+}
+
+func shiftdown(A []int, top int) {
+	pos := top
+	temp := A[pos]
+	child := pos*2 + 1
+	for child < len(A) {
+		rightchild := child + 1
+		if rightchild < len(A) && A[rightchild] < A[child] {
+			child = rightchild
+		}
+		A[pos] = A[child]
+		pos = child
+		child = 2*pos + 1
+	}
+	A[pos] = temp
+	shiftup(A, pos, top)
+}
+
+func shiftup(A []int, i int, top int) {
+	temp := A[i]
+	for i > top {
+		up := (i - 1) >> 1
+		if temp < A[up] {
+			A[i] = A[up]
+			i = up
+		} else {
+			break
+		}
+	}
+	A[i] = temp
+}
+
+func checkHeap(A []int, top int) bool {
+	left := 2*top + 1
+	checkLeft := left >= len(A) || (A[top] <= A[left] && isHeap(A, left))
+	right := 2*top + 2
+	checkRight := right >= len(A) || (A[top] <= A[right] && isHeap(A, right))
+	return checkLeft && checkRight
 }
 
 func TestHeap() {
-	b := []int{5, 3, 1, 6, 9, 0, 7, 8, 4, 2}
-	quicksort(b, 0, len(b)-1)
-	fmt.Println(b)
-
 	fmt.Println(isHeap([]int{1, 2, 3}, 0))
 	fmt.Println(isHeap([]int{3, 2, 1}, 0))
 
