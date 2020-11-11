@@ -17,8 +17,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/bluecover/gox/contextdemo/google"
-	"github.com/bluecover/gox/contextdemo/userip"
+	"github.com/c1xfr2e/gox/contextdemo/google"
+	"github.com/c1xfr2e/gox/contextdemo/userip"
 )
 
 func main() {

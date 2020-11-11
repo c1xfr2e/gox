@@ -13,7 +13,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/bluecover/gox/contextdemo/userip"
+	"github.com/c1xfr2e/gox/contextdemo/userip"
 )
 
 // Results is an ordered list of search results.
