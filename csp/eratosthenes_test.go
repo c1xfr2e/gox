@@ -7,8 +7,8 @@ import (
 )
 
 // EratosthenesPlain returns prime numbers <= n in a slice.
-// phi is the count of prime numbers approximate to x/ln(x).
 func EratosthenesPlain(n int) []int {
+	// phi is the count of prime numbers <=n approximated by x/ln(x).
 	phi := int(math.Ceil((float64(n) / math.Log(float64(n)) * 1.2)))
 	p := make([]int, phi)
 	p[0], p[1] = 2, 3
