@@ -10,27 +10,27 @@ import (
 func EratosthenesPlain(n int) []int {
 	// phi is the count of prime numbers <=n approximated by x/ln(x).
 	phi := int(math.Ceil((float64(n) / math.Log(float64(n)) * 1.2)))
-	p := make([]int, phi)
-	p[0], p[1] = 2, 3
+	ps := make([]int, phi)
+	ps[0], ps[1] = 2, 3
+	sqrt := int(math.Sqrt(float64(n)))
 	k := 2
-	sq := int(math.Sqrt(float64(n)))
 	for m := 3; m <= n; m += 2 {
 		yes := true
 		for i := 0; i < k; i++ {
-			if p[i] > sq {
+			if ps[i] > sqrt {
 				break
 			}
-			if m%p[i] == 0 {
+			if m%ps[i] == 0 {
 				yes = false
 				break
 			}
 		}
 		if yes {
-			p[k] = m
+			ps[k] = m
 			k++
 		}
 	}
-	return p[:k]
+	return ps[:k]
 }
 
 // Send the sequence 2, 3, 4, ... to channel 'ch'.
