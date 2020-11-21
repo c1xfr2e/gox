@@ -34,13 +34,15 @@ func TestTimer(t *testing.T) {
 }
 
 func TestTicker(t *testing.T) {
-	ticker := time.NewTicker(1000 * time.Millisecond)
-	go func() {
-		for t := range ticker.C {
-			fmt.Println("Tick at", t)
+	ticker := time.NewTicker(time.Millisecond * 500)
+	boom := time.After(time.Second * 3)
+	for {
+		select {
+		case <-ticker.C:
+			fmt.Println("tick")
+		case <-boom:
+			fmt.Println("boom!")
+			return
 		}
-	}()
-	time.Sleep(2600 * time.Millisecond)
-	ticker.Stop()
-	fmt.Println("Ticker stopped")
+	}
 }
