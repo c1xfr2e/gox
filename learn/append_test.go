@@ -8,7 +8,7 @@ import (
 func Append(slice, data []byte) []byte {
 	l := len(slice)
 	if l+len(data) > cap(slice) {
-		newSlice := make([]byte, 2*(l+len(data)))
+		newSlice := make([]byte, l+len(data), 2*(l+len(data)))
 		copy(newSlice, slice)
 		slice = newSlice
 	}
@@ -20,8 +20,8 @@ func Append(slice, data []byte) []byte {
 func TestAppend(t *testing.T) {
 	a := []byte("123")
 	b := Append(a, []byte("456"))
+	fmt.Printf("len: %d  cap:%d\n", len(b), cap(b))
 	fmt.Println(string(b))
-	fmt.Printf("hello %g", 123.0)
 }
 
 func TestReSlice(t *testing.T) {
