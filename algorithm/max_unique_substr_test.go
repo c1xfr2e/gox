@@ -113,6 +113,8 @@ func Test_maxUniqueSubstrBrute(t *testing.T) {
 
 func Test_maxUniqueSubstrLinear(t *testing.T) {
 	cases := []string{
+		"xxx",
+		"xyxy",
 		"3284578569902317",
 		"jekljgaks384aksdjf",
 		"helworoadknni",
