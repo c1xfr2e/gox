@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func maxUniqueSubstr_brute(str string) string {
+func maxUniqueSubstrBrute(str string) string {
 	var first, size int
 	for i := 0; i < len(str); i++ {
 		m := make(map[byte]bool)
@@ -51,6 +51,33 @@ func maxUniqueSubstr(str string) string {
 	return str[start : start+size]
 }
 
+func max(x, y int) int {
+	if x < y {
+		return y
+	}
+	return x
+}
+
+func maxUniqueSubstrLinear(str string) string {
+	lastIndice := make(map[byte]int)
+	first := 0
+	length := 0
+	i := 0
+	for j := 0; j < len(str); j++ {
+		li, ok := lastIndice[str[j]]
+		lastIndice[str[j]] = j
+		if ok && li >= i {
+			i = li + 1
+			continue
+		}
+		if j-i+1 > length {
+			length = j - i + 1
+			first = i
+		}
+	}
+	return str[first : first+length]
+}
+
 func Test_maxUniqueSubstr(t *testing.T) {
 	cases := []struct{ str, sub string }{
 		{"aaa", "a"},
@@ -67,7 +94,7 @@ func Test_maxUniqueSubstr(t *testing.T) {
 	}
 }
 
-func Test_maxUniqueSubstr_brute(t *testing.T) {
+func Test_maxUniqueSubstrBrute(t *testing.T) {
 	cases := []string{
 		"3284578569902317",
 		"jekljgaks384aksdjf",
@@ -76,10 +103,28 @@ func Test_maxUniqueSubstr_brute(t *testing.T) {
 		"ddfkdskfje9349wsklajf",
 	}
 	for _, c := range cases {
-		r1 := maxUniqueSubstr_brute(c)
+		r1 := maxUniqueSubstrBrute(c)
 		r2 := maxUniqueSubstr(c)
 		if r1 != r2 {
 			t.Errorf("failed on case %q: want %q, got %q", c, r1, r2)
 		}
 	}
+}
+
+func Test_maxUniqueSubstrLinear(t *testing.T) {
+	cases := []string{
+		"3284578569902317",
+		"jekljgaks384aksdjf",
+		"helworoadknni",
+		"你暗红色2我就开打时",
+		"ddfkdskfje9349wsklajf",
+	}
+	for _, c := range cases {
+		r1 := maxUniqueSubstrLinear(c)
+		r2 := maxUniqueSubstr(c)
+		if r1 != r2 {
+			t.Errorf("failed on case %q: want %q, got %q", c, r1, r2)
+		}
+	}
+
 }
